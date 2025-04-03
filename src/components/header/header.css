@@ -1,0 +1,73 @@
+.headers {
+  background: #1f1e32; /* Fundo mais translúcido */
+  backdrop-filter: blur(15px); /* Aumentando o desfoque */
+  -webkit-backdrop-filter: blur(15px); /* Suporte para Safari */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para profundidade */
+  width: 100%;
+  padding: 10px 5%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.logo span {
+  color: #3736cc;
+}
+
+.links {
+  margin-left: 1.5%;
+}
+
+.links ul {
+  list-style-type: none;
+  display: flex;
+  gap: 3rem;
+}
+
+ul li a {
+  position: relative;
+  text-decoration: none;
+  color: #fff;
+}
+
+ul li a:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -0%;
+  height: 2px;
+  width: 0;
+  background-color: #3736cc;
+  transition: all 0.3s ease;
+}
+
+ul li a:hover::after {
+  width: 100%;
+}
+
+.cv {
+  cursor: pointer;
+  border: 2px solid #fff;
+  color: #3736cc;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+  align-items: center;
+  width: 170px;
+  padding: 10px 0;
+  transition: all 0.1s linear;
+}
+
+.cv:hover {
+  color: #fff;
+  background-color: #3736cc;
+  border: 2px solid #3736cc;
+  box-shadow: 0 0 10px 0 #3736cc;
+}
