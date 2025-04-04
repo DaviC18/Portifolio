@@ -1,5 +1,5 @@
 .headers {
-  background: #1f1e32; /* Fundo mais translúcido */
+  background: #0b0a1446; /* Fundo mais translúcido */
   backdrop-filter: blur(15px); /* Aumentando o desfoque */
   -webkit-backdrop-filter: blur(15px); /* Suporte para Safari */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para profundidade */
