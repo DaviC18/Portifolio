@@ -94,7 +94,7 @@ const Header = () => {
               <li>
                 <a
                   className="cv"
-                  href="https://drive.google.com/file/d/..."
+                  href="https://drive.google.com/file/d/1JGwHVsqPZDgfXxdXujJaX64miM3f4_al/view?usp=drive_link"
                   download={true}
                 >
                   <p>Download</p>
