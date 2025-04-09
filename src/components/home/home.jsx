@@ -4,7 +4,7 @@ import Me from "../../assets/111199405.png";
 const Home = () => {
   return (
     <>
-      {/* <div className="me" id="home">
+      <div className="me" id="home">
         <div className="photo">
           <img src={Me} alt="" />
         </div>
@@ -12,7 +12,7 @@ const Home = () => {
           <p className="name">Davi Curty</p>
           <p className="dev">Desenvolvedor Full-stack</p>
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
