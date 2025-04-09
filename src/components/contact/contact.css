@@ -1,0 +1,76 @@
+.contacts {
+  width: 100%;
+  padding: 2rem 5% 10rem 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-wrapper {
+  padding: 1rem 0;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contact-wrapper img {
+  width: 50px;
+}
+
+.line {
+  width: 100%;
+  height: 2px;
+  background-color: #cacaca;
+}
+
+.whats {
+  width: 200%;
+  cursor: pointer;
+  position: relative;
+}
+
+.whats:hover .number {
+  display: block;
+}
+
+.number {
+  display: none;
+  position: absolute;
+  top: 4px;
+  left: 60%;
+  width: 170px;
+}
+
+.number img {
+  width: 15px;
+}
+
+.contact-wrapper p {
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  padding: 10px;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.base {
+  position: relative;
+  z-index: 2;
+  background-color: #101322ae;
+  border: 2px solid #6e6e6e;
+  border-radius: 25px;
+}
+
+@media (max-width: 820px) {
+  .number {
+    left: -55px;
+    top: 55px;
+  }
+  .base {
+    background-color: #101322;
+  }
+}

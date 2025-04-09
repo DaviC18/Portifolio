@@ -1,4 +1,4 @@
-.headers {
+.header-desktop {
   background: #0b0a1446; /* Fundo mais translúcido */
   backdrop-filter: blur(15px); /* Aumentando o desfoque */
   -webkit-backdrop-filter: blur(15px); /* Suporte para Safari */
@@ -7,6 +7,19 @@
   padding: 10px 5%;
   color: #fff;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-mobile {
+  background: #0b0a1446; /* Fundo mais translúcido */
+  backdrop-filter: blur(15px); /* Aumentando o desfoque */
+  -webkit-backdrop-filter: blur(15px); /* Suporte para Safari */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para profundidade */
+  width: 100%;
+  padding: 10px 5%;
+  color: #fff;
+  display: none;
   align-items: center;
   justify-content: space-between;
 }
@@ -53,13 +66,15 @@ ul li a:hover::after {
 
 .cv {
   cursor: pointer;
+  text-decoration: none;
+  color: #fff;
   border: 2px solid #fff;
   color: #3736cc;
-  border-radius: 30px;
   display: flex;
   justify-content: center;
-  gap: 1.5em;
   align-items: center;
+  border-radius: 30px;
+  gap: 1.5em;
   width: 170px;
   padding: 10px 0;
   transition: all 0.1s linear;
@@ -70,4 +85,112 @@ ul li a:hover::after {
   background-color: #3736cc;
   border: 2px solid #3736cc;
   box-shadow: 0 0 10px 0 #3736cc;
+}
+
+#menu_checkbox {
+  display: none;
+}
+
+label {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  transform: translateY(-23%);
+  transition: 0.3s ease transform;
+  cursor: pointer;
+}
+
+label div {
+  width: 4px;
+  height: 4px;
+  background-color: #ffffff;
+  margin-left: 0;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  transition: 0.3s ease width, 0.3s ease margin-left, 0.3s ease margin-bottom,
+    0.3s ease background-color;
+}
+
+label div:first-child {
+  width: 18px;
+}
+
+label div:nth-child(2) {
+  width: 10px;
+}
+
+label div:last-child {
+  width: 25px;
+  margin-bottom: 0;
+}
+
+#menu_checkbox:checked + label {
+  transform: translateY(-50%) rotateZ(-90deg);
+}
+
+#menu_checkbox:checked + label div {
+  width: 6px;
+  margin-left: 12px;
+  margin-bottom: 3px;
+  background-color: #ffffff;
+}
+
+.header-mobile .links {
+  display: none; /* Inicialmente escondido */
+  flex-direction: column;
+  justify-content: flex-end;
+  position: absolute;
+  top: 57px;
+  right: 0;
+  height: 52vh;
+  width: 200px; /* Definido para 200px quando ativo */
+  border-width: 0 2px 2px 2px;
+  border-style: solid;
+  border-color: #6e6e6e;
+  background-color: #09091c;
+  border-radius: 0 0px 20px 20px;
+  transition: all 0.3s ease;
+}
+
+.links.active {
+  display: flex !important; /* Exibe a navbar quando ativa */
+}
+
+.header-mobile .links ul {
+  padding-top: 20px;
+  padding-right: 5%;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.links.active {
+  display: flex; /* Exibe a navbar quando ativa */
+}
+
+.header-mobile ul li .cv::after {
+  width: 0;
+}
+
+@media (max-width: 830px) {
+  .header-desktop {
+    display: none;
+  }
+
+  .header-mobile {
+    display: flex;
+  }
+
+  .header-mobile .links {
+    display: none;
+  }
+}
+
+@media (max-height: 570px) {
+  .header-mobile .links {
+    height: 64vh;
+  }
 }

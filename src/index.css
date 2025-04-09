@@ -8,6 +8,7 @@
 
 html,
 body {
+  scroll-behavior: smooth;
   height: 100vh;
   background: url(./assets/background.png) no-repeat center center fixed;
   background-size: cover;
