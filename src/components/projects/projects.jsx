@@ -6,7 +6,7 @@ import Project3 from "../../assets/project-3.png";
 const Projects = () => {
   return (
     <>
-      {/* <h1>Projetos</h1>
+      <h1>Projetos</h1>
       <div className="projects" id="projetos">
         <div className="project-single">
           <a href="https://redux-six-rho.vercel.app/">
@@ -31,7 +31,7 @@ const Projects = () => {
             </p>
           </a>
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
