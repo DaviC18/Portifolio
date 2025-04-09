@@ -11,14 +11,14 @@ const Projects = () => {
         <div className="project-single">
           <a href="https://redux-six-rho.vercel.app/">
             <img src={Project1} alt="Carrinho Shopping" />
-            <p>Carrinho de compras interativo foi feito com React.js e Redux</p>
+            <p>Carrinho de compras interativo feito com React.js e Redux</p>
           </a>
         </div>
         <div className="project-single">
           <a href="https://netflix-login-clone-phi.vercel.app/">
             <img src={Project2} alt="Netflix landing page" />
             <p>
-              Landing page da Netflix foi feita com React.js e estilizada com
+              Landing page da Netflix feita com React.js e estilizada com
               Tailwind
             </p>
           </a>
@@ -27,7 +27,8 @@ const Projects = () => {
           <a href="https://gerenciador-de-tarefas-virid.vercel.app/">
             <img src={Project3} alt="Gerenciador de tarefas" />
             <p>
-              Gerenciador de tarefas feito de React.js e monopolizando os Hooks
+              Gerenciador de tarefas feito com React.js e a monopolização dos
+              Hooks
             </p>
           </a>
         </div>
