@@ -7,7 +7,7 @@ import Whatsapp from "../../assets/whatsapp.png";
 const Contact = () => {
   return (
     <>
-      {/* <div className="contacts" id="contato">
+      <div className="contacts" id="contato">
         <h1>Contatos</h1>
         <div className="contact-wrapper">
           <div className="contact-single">
@@ -43,7 +43,7 @@ const Contact = () => {
           </div>
         </div>
         <div className="line"></div>
-      </div> */}
+      </div>
     </>
   );
 };
