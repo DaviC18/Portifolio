@@ -49,7 +49,7 @@ const Header = () => {
           href="https://drive.google.com/file/d/1KGwIp7kLrbRIn5IbwaYZp1NFVUplCRi-/view?usp=sharing"
           download={true}
         >
-          <p>Download</p>
+          <p>Currículo</p>
           <DownloadSimple size={20} />
         </a>
       </div>
