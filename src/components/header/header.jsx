@@ -46,7 +46,7 @@ const Header = () => {
         </div>
         <a
           className="cv"
-          href="https://drive.google.com/file/d/1JGwHVsqPZDgfXxdXujJaX64miM3f4_al/view?usp=drive_link"
+          href="https://drive.google.com/file/d/1KGwIp7kLrbRIn5IbwaYZp1NFVUplCRi-/view?usp=sharing"
           download={true}
         >
           <p>Download</p>
