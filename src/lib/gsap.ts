@@ -1,26 +1,17 @@
 /**
  * Ponto único de registro do GSAP (SPEC §7.6). Sempre importar daqui, nunca de "gsap" direto.
+ *
+ * Bundle (SPEC §11, < 200KB gz): aqui só entram os plugins da página inicial.
+ * DrawSVG e MotionPath ficam em `gsap-track.ts`, importado só pelo TrackMap (lazy).
+ * Flip e CustomEase não são usados por nenhum componente; registrar quando forem.
  */
 import gsap from "gsap";
-import { CustomEase } from "gsap/CustomEase";
-import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
-import { Flip } from "gsap/Flip";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(
-  useGSAP,
-  ScrollTrigger,
-  SplitText,
-  ScrambleTextPlugin,
-  MotionPathPlugin,
-  Flip,
-  DrawSVGPlugin,
-  CustomEase,
-);
+gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText, ScrambleTextPlugin);
 
 /** Reveal de conteúdo é o caso mais comum (SPEC §7.1). */
 gsap.defaults({ duration: 0.8, ease: "expo.out" });
@@ -55,14 +46,4 @@ export function finishAllAnimations() {
   });
 }
 
-export {
-  gsap,
-  ScrollTrigger,
-  SplitText,
-  ScrambleTextPlugin,
-  MotionPathPlugin,
-  Flip,
-  DrawSVGPlugin,
-  CustomEase,
-  useGSAP,
-};
+export { gsap, ScrollTrigger, SplitText, ScrambleTextPlugin, useGSAP };

@@ -143,7 +143,8 @@ export function Hero({ ready }: Props) {
         </ul>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
-          <div data-hero="cta">
+          {/* sem link (WhatsApp pendente) o wrapper some, senão o gap do flex desloca o resto */}
+          <div data-hero="cta" className="[&:not(:has(a))]:hidden">
             <MagneticButton>
               <PitButton origem="hero" />
             </MagneticButton>

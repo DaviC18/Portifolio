@@ -1,47 +1,86 @@
-import { Button } from "@/components/ui/button";
+import { lazy, Suspense, useEffect, useState, useSyncExternalStore } from "react";
+import { ContactDock } from "@/components/common/ContactDock";
+import { SkipLink } from "@/components/common/SkipLink";
 import { Toaster } from "@/components/ui/sonner";
-import { hero, profile, ui } from "@/content/site";
+import { MQ, ScrollTrigger } from "@/lib/gsap";
+import { shouldRunIntro } from "@/lib/intro";
+import { useAnchorScroll, useLenis } from "@/lib/lenis";
+import { useMotion } from "@/lib/motion";
+import { CarSetup } from "@/sections/CarSetup";
+import { Classification } from "@/sections/Classification";
+import { Contact } from "@/sections/Contact";
+import { DriverCard } from "@/sections/DriverCard";
+import { Footer } from "@/sections/Footer";
+import { Hero } from "@/sections/Hero";
+import { TeamRadio } from "@/sections/TeamRadio";
+import { Telemetry } from "@/sections/Telemetry";
+import { TimingTower } from "@/sections/TimingTower";
 
-/** Checagem visual da Fase 0 (fontes, .text-silver, botão teal). Sai quando o WP-3 montar as seções. */
-function FoundationCheck() {
-  return (
-    <section className="relative isolate min-h-svh py-24">
-      <div className="carbon" aria-hidden="true" />
-      <div className="container-site space-y-8">
-        <p className="font-mono text-xs tracking-[0.2em] text-silver-500 uppercase tabular-nums">{hero.eyebrow}</p>
-        <h1 className="font-condensed text-silver text-[clamp(3rem,10vw,8.5rem)] leading-[0.9] font-bold uppercase">
-          {profile.name}
-        </h1>
-        <p className="max-w-[65ch] font-sans text-lg leading-relaxed">{profile.pitch}</p>
-        <Button>{ui.callBox}</Button>
-      </div>
-    </section>
+// decorativos e pesados: fora do bundle inicial (SPEC §11)
+const StartLights = lazy(() =>
+  import("@/components/motion/StartLights").then((m) => ({ default: m.StartLights })),
+);
+const TrackMap = lazy(() => import("@/components/motion/TrackMap").then((m) => ({ default: m.TrackMap })));
+
+/** `true` em telas ≥1280px: só aí vale baixar o TrackMap. */
+function useWide() {
+  return useSyncExternalStore(
+    (cb) => {
+      const mql = window.matchMedia(MQ.wide);
+      mql.addEventListener("change", cb);
+      return () => mql.removeEventListener("change", cb);
+    },
+    () => window.matchMedia(MQ.wide).matches,
+    () => false,
   );
 }
 
-/**
- * Esqueleto da página (SPEC §5). A partir da Fase 1 este arquivo é do integrador (WP-3).
- * Nenhum WP da Fase 2 edita aqui: cada um testa no próprio `_demo-<wp>.tsx`.
- */
+/** Página única na ordem da SPEC §5. */
 export default function App() {
+  const { allowed } = useMotion();
+  const wide = useWide();
+  // decidido na montagem: sem intro, o hero entra direto
+  const [introRuns] = useState(() => shouldRunIntro(allowed));
+  const [heroReady, setHeroReady] = useState(!introRuns);
+
+  useLenis();
+  useAnchorScroll();
+
+  // posições dos ScrollTriggers depois que fontes e imagens mudam o layout (SPEC §7.6)
+  useEffect(() => {
+    const refresh = () => ScrollTrigger.refresh();
+    document.fonts.ready.then(refresh);
+    if (document.readyState === "complete") refresh();
+    else window.addEventListener("load", refresh, { once: true });
+    return () => window.removeEventListener("load", refresh);
+  }, []);
+
   return (
     <>
-      {/* SkipLink */}
-      {/* StartLights (lazy, overlay da intro) */}
-      {/* TimingTower (header) */}
+      <SkipLink />
+      {introRuns && (
+        // enquanto o chunk da intro carrega, um véu carbon evita o hero piscar antes das luzes
+        <Suspense fallback={<div aria-hidden="true" className="fixed inset-0 z-[200] bg-carbon-950" />}>
+          <StartLights onComplete={() => setHeroReady(true)} />
+        </Suspense>
+      )}
+      <TimingTower />
       <main id="conteudo">
-        <FoundationCheck />
-        {/* 1 · Hero (#grid) */}
-        {/* 2 · TeamRadio (#radio) */}
-        {/* 3 · Classification (#classificacao) */}
-        {/* 4 · Telemetry (#telemetria) */}
-        {/* 5 · CarSetup (#setup) */}
-        {/* 6 · DriverCard (#piloto) */}
-        {/* 7 · Contact (#box) */}
+        <Hero ready={heroReady} />
+        <TeamRadio />
+        <Classification />
+        <Telemetry />
+        <CarSetup />
+        <DriverCard />
+        <Contact />
       </main>
-      {/* Footer */}
-      {/* TrackMap (lazy, ≥1280px) */}
-      {/* ContactDock (<1024px) */}
+      <Footer />
+      {wide && allowed && (
+        <Suspense fallback={null}>
+          <TrackMap />
+        </Suspense>
+      )}
+      <ContactDock />
       <Toaster />
     </>
   );

@@ -32,7 +32,7 @@ export function Contact() {
         />
 
         <Reveal stagger={0.06} className="mt-12 flex flex-wrap items-center gap-4">
-          <div>
+          <div className="[&:not(:has(a))]:hidden">
             <MagneticButton>
               <PitButton origem="box" />
             </MagneticButton>

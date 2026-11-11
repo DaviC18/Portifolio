@@ -42,13 +42,16 @@ export function PitButton({ origem, children = ui.callBox, message, variant = "p
   const ref = useRef<HTMLAnchorElement>(null);
   const { allowed } = useMotion();
   const pending = isTodo(contact.whatsapp);
+  const rendered = !pending || import.meta.env.DEV;
 
   const { contextSafe } = useGSAP(
     () => {
+      // botão pendente no build não renderiza: nada para preparar
+      if (!rendered) return;
       // a aba começa fora do botão; sem JS ela cobre o fundo e o botão continua legível
       gsap.set("[data-drs-tab]", { xPercent: -101 });
     },
-    { scope: ref, dependencies: [allowed], revertOnUpdate: true },
+    { scope: rendered ? ref : undefined, dependencies: [allowed], revertOnUpdate: true },
   );
 
   const open = contextSafe(() => {
@@ -62,7 +65,7 @@ export function PitButton({ origem, children = ui.callBox, message, variant = "p
     gsap.to("[data-drs-arrow]", { x: 0, ...MOTION.micro, overwrite: true });
   });
 
-  if (pending && !import.meta.env.DEV) return null;
+  if (!rendered) return null;
 
   return (
     <a

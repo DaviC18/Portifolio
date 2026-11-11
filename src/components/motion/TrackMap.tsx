@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { trackMap } from "@/content/site";
-import { gsap, MotionPathPlugin, MQ, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { gsap, MQ, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { MotionPathPlugin } from "@/lib/gsap-track";
 import { useMotion } from "@/lib/motion";
 
 /**

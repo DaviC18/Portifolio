@@ -3,32 +3,14 @@ import { CarbonBg } from "@/components/motion/CarbonBg";
 import { SpeedLines } from "@/components/motion/SpeedLines";
 import { intro, ui } from "@/content/site";
 import { gsap, MOTION, useGSAP } from "@/lib/gsap";
+import { markIntroSeen, shouldRunIntro } from "@/lib/intro";
 import { start as startScroll, stop as stopScroll } from "@/lib/lenis";
 import { useMotion } from "@/lib/motion";
 import { track } from "@/lib/track";
 
-const SEEN_KEY = "dc:intro-seen";
 const COLUMNS = 5;
 /** intervalo entre colunas acendendo (SPEC §7.2) */
 const STEP = 0.35;
-
-/** Roda só na primeira visita da sessão. Se o storage falhar, não roda. */
-function shouldRun(allowed: boolean) {
-  if (!allowed) return false;
-  try {
-    return sessionStorage.getItem(SEEN_KEY) === null;
-  } catch {
-    return false;
-  }
-}
-
-function markSeen() {
-  try {
-    sessionStorage.setItem(SEEN_KEY, "1");
-  } catch {
-    // sem storage: shouldRun já devolveu false
-  }
-}
 
 const main = () => document.getElementById("conteudo");
 
@@ -46,7 +28,7 @@ type Props = {
 export function StartLights({ onComplete }: Props) {
   const { allowed } = useMotion();
   // decidido uma vez, na montagem: pausar depois não reinicia nem esconde a intro
-  const [running, setRunning] = useState(() => shouldRun(allowed));
+  const [running, setRunning] = useState(() => shouldRunIntro(allowed));
   const [launch, setLaunch] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
@@ -65,7 +47,7 @@ export function StartLights({ onComplete }: Props) {
   useGSAP(
     () => {
       if (!running) return;
-      markSeen();
+      markIntroSeen();
       stopScroll();
       main()?.setAttribute("inert", "");
       ref.current?.querySelector<HTMLButtonElement>("[data-skip]")?.focus({ preventScroll: true });
