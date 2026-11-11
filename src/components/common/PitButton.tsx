@@ -13,7 +13,7 @@ type Props = {
   children?: ReactNode;
   /** padrão: `contact.whatsappMessage` */
   message?: string;
-  variant?: "primary" | "ghost" | "small";
+  variant?: "primary" | "ghost" | "small" | "small-ghost";
   className?: string;
 };
 
@@ -21,6 +21,8 @@ const VARIANTS = {
   primary: "min-h-14 px-7 text-base bg-teal-400 text-carbon-950",
   ghost: "min-h-14 px-7 text-base border border-line text-white",
   small: "min-h-11 px-4 text-sm bg-teal-400 text-carbon-950",
+  /** header: não disputa o teal com o CTA do hero (SPEC §4, um CTA teal por viewport) */
+  "small-ghost": "min-h-11 px-4 text-sm border border-line text-white",
 } as const;
 
 /** cor da aba interna que desliza no hover ("DRS") */
@@ -28,6 +30,7 @@ const TAB = {
   primary: "bg-teal-600",
   ghost: "bg-graphite-700",
   small: "bg-teal-600",
+  "small-ghost": "bg-graphite-700",
 } as const;
 
 /**
@@ -80,7 +83,7 @@ export function PitButton({ origem, children = ui.callBox, message, variant = "p
         "relative isolate inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-panel font-semibold",
         VARIANTS[variant],
         // sem movimento, a aba não desliza: o hover vira troca de cor
-        variant === "ghost"
+        variant === "ghost" || variant === "small-ghost"
           ? "hover:border-silver-500 in-data-[motion=off]:hover:bg-graphite-700 motion-reduce:hover:bg-graphite-700"
           : "in-data-[motion=off]:hover:bg-teal-600 motion-reduce:hover:bg-teal-600",
         pending && "outline-2 outline-offset-2 outline-amber outline-dashed",
