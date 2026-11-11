@@ -1,0 +1,223 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Sem tema claro (SPEC §12): a variante `dark:` do shadcn vale sempre. */
+@custom-variant dark (&:is(*));
+
+/* Tokens: SPEC §4 */
+@theme {
+  --color-carbon-950: #0a0a0b; /* fundo base */
+  --color-carbon-900: #111214; /* seções alternadas */
+  --color-graphite-800: #16171a; /* painéis, cards */
+  --color-graphite-700: #202227; /* hover de painel */
+  --color-line: #2a2c31; /* bordas e divisores */
+  --color-silver-100: #eef0f2;
+  --color-silver-300: #c5c9ce; /* títulos */
+  --color-silver-500: #8e949b; /* texto secundário (AA sobre carbon) */
+  --color-white: #f4f5f6; /* texto principal */
+  --color-teal-400: #00d2be; /* destaque: CTA, foco, dado ao vivo */
+  --color-teal-600: #00a19c; /* hover/pressed do teal */
+  --color-signal-red: #e10600; /* SOMENTE luzes de largada */
+  --color-amber: #f5a524; /* StatusPill "Treino livre" (SPEC §6) */
+
+  --font-display: "Saira Variable", "Saira", system-ui, sans-serif;
+  --font-sans: "Titillium Web", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --radius-panel: 0.5rem;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Variáveis do shadcn apontando para os tokens acima (só tema escuro). */
+:root {
+  --radius: 0.5rem;
+  --background: var(--color-carbon-950);
+  --foreground: var(--color-white);
+  --card: var(--color-graphite-800);
+  --card-foreground: var(--color-white);
+  --popover: var(--color-graphite-800);
+  --popover-foreground: var(--color-white);
+  --primary: var(--color-teal-400);
+  --primary-foreground: var(--color-carbon-950);
+  --secondary: var(--color-graphite-700);
+  --secondary-foreground: var(--color-white);
+  --muted: var(--color-graphite-700);
+  --muted-foreground: var(--color-silver-500);
+  --accent: var(--color-graphite-700);
+  --accent-foreground: var(--color-white);
+  --destructive: var(--color-signal-red);
+  --border: var(--color-line);
+  --input: var(--color-line);
+  --ring: var(--color-teal-400);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-carbon-950 font-sans text-white antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+
+  ::selection {
+    @apply bg-teal-400 text-carbon-950;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-teal-400);
+    outline-offset: 2px;
+  }
+
+  /* seções focadas via âncora e o main focado no fim da intro não ganham contorno */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
+  }
+}
+
+/* Lenis: recomendado pela lib */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Reveal: só esconde quando o JS rodou; com movimento reduzido ou pausado fica sempre visível */
+html.js [data-reveal] {
+  opacity: 0;
+}
+html[data-motion="off"] [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Movimento reduzido ou pausado: loops e transições em CSS param (SPEC §7.5) */
+html[data-motion="off"] *,
+html[data-motion="off"] *::before,
+html[data-motion="off"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@utility container-site {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 20px;
+  @media (width >= 48rem) {
+    padding-inline: 32px;
+  }
+}
+
+/* Título metálico: só em títulos display e no "12" (SPEC §4) */
+@utility text-silver {
+  background-image: linear-gradient(180deg, #f4f5f6 0%, #c5c9ce 45%, #7d838a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Fibra de carbono em CSS (dois gradientes cruzados, ~4%). Camada overlay:
+   o pai precisa de `relative isolate`. Usar via <CarbonBg />. */
+@utility carbon {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image:
+    repeating-linear-gradient(45deg, #fff 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(-45deg, #fff 0 2px, transparent 2px 6px);
+  background-size: 8px 8px;
+}
+
+/* Canto chanfrado estático em painéis de telemetria (decorativo) */
+@utility chamfer {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+}
+
+/* Display condensado (Saira com eixo wdth) */
+@utility font-condensed {
+  font-family: var(--font-display);
+  font-stretch: 75%;
+}
+
+/* Escondido até receber foco (SkipLink) */
+@utility sr-only-focusable {
+  &:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
