@@ -30,7 +30,7 @@ export function ImagePlaceholder({ ratio = "16/10", label, className }: Props) {
       <CarbonBg />
       <span
         aria-hidden="true"
-        className="font-condensed absolute top-3 right-4 text-2xl leading-none font-bold text-silver-500/60"
+        className="font-condensed absolute top-3 right-4 text-2xl leading-none font-bold text-silver-500"
       >
         {profile.number}
       </span>

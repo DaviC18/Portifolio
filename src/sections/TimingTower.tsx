@@ -110,9 +110,10 @@ export function TimingTower() {
       )}
     >
       <div className="container-site flex min-h-16 items-center justify-between gap-4">
-        <a href="#grid" className="inline-flex min-h-11 items-center gap-2" aria-label={profile.name}>
+        <a href="#grid" className="inline-flex min-h-11 items-center gap-2">
           <span className="font-condensed text-2xl leading-none font-bold text-white">{profile.initials}</span>
           <span className="font-mono text-xs text-silver-500">#{profile.number}</span>
+          <span className="sr-only">{profile.name}</span>
         </a>
 
         <nav className="hidden lg:block">

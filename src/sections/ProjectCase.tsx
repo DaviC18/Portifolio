@@ -1,5 +1,6 @@
 import { ArrowUpRight, CodeXml, TriangleAlert } from "lucide-react";
 import { ImagePlaceholder } from "@/components/common/ImagePlaceholder";
+import { ResponsiveImage } from "@/components/common/ResponsiveImage";
 import { PositionBadge } from "@/components/common/PositionBadge";
 import { StatusPill } from "@/components/common/StatusPill";
 import { CountUp } from "@/components/motion/CountUp";
@@ -28,7 +29,20 @@ export function ProjectCase({ project: p }: { project: Project }) {
     !isTodo(p.links.repo) && { tipo: "repo" as const, href: p.links.repo as string, label: ui.seeCode, Icon: CodeXml },
     !isTodo(p.links.live) && { tipo: "live" as const, href: p.links.live as string, label: ui.seeLive, Icon: ArrowUpRight },
   ].filter((l): l is Exclude<typeof l, false> => Boolean(l));
-  const images = [p.images.cover, ...p.images.gallery].slice(0, 3);
+  const extras = p.images.gallery.slice(0, 2);
+
+  // capa: captura real ou placeholder (SPEC §9)
+  const cover = p.images.cover ? (
+    <ResponsiveImage
+      src={p.images.cover}
+      alt={p.images.coverAlt ?? p.name}
+      width={p.images.coverSize?.[0] ?? 1440}
+      height={p.images.coverSize?.[1] ?? 704}
+      sizes="(min-width: 1024px) 560px, (min-width: 768px) 704px, 100vw"
+    />
+  ) : (
+    <ImagePlaceholder label={p.name} />
+  );
 
   return (
     <article
@@ -97,11 +111,11 @@ export function ProjectCase({ project: p }: { project: Project }) {
           </div>
         </Reveal>
 
-        <Reveal className="space-y-8">
+        <Reveal className="space-y-8 lg:sticky lg:top-24 lg:self-start">
           <div className="chamfer border-l-2 border-teal-400 bg-graphite-800 p-6 md:p-8">
             <BlockLabel>{ui.telemetry}</BlockLabel>
             {p.telemetry.length > 0 ? (
-              <dl className="grid gap-6 sm:grid-cols-2">
+              <dl className="grid grid-cols-2 gap-x-5 gap-y-6">
                 {p.telemetry.map((t) => (
                   <div key={t.label} className="flex flex-col gap-2">
                     <dt className="order-2 text-sm text-silver-500">{t.label}</dt>
@@ -154,19 +168,18 @@ export function ProjectCase({ project: p }: { project: Project }) {
               ))}
             </div>
           )}
+
+          {cover}
         </Reveal>
       </div>
 
-      <Reveal stagger={0.08} className="mt-12 grid gap-4 md:grid-cols-3">
-        {images.map((src, i) => (
-          // imagens ainda não existem (SPEC §9): todas viram placeholder com o nome do projeto
-          <ImagePlaceholder
-            key={src ?? i}
-            label={p.name}
-            className={i === 0 ? "md:col-span-3 lg:col-span-2" : undefined}
-          />
-        ))}
-      </Reveal>
+      {extras.length > 0 && (
+        <Reveal stagger={0.08} className="mt-12 grid gap-4 md:grid-cols-2">
+          {extras.map((src) => (
+            <ResponsiveImage key={src} src={src} alt={p.name} width={1440} height={704} sizes="(min-width: 768px) 50vw, 100vw" />
+          ))}
+        </Reveal>
+      )}
     </article>
   );
 }

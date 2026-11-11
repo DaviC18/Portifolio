@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { ImagePlaceholder } from "@/components/common/ImagePlaceholder";
+import { ResponsiveImage } from "@/components/common/ResponsiveImage";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { StatusPill } from "@/components/common/StatusPill";
 import { classification, projects, ui, type Project } from "@/content/site";
@@ -31,7 +32,8 @@ export function Classification() {
         gsap.utils.toArray<HTMLElement>("[data-board]").forEach((board) => {
           const rows = board.querySelectorAll("[data-board-row]");
           const tl = gsap.timeline({ scrollTrigger: { trigger: board, start: "top 80%", once: true } });
-          tl.from(rows, { autoAlpha: 0, y: 16, ...MOTION.reveal, stagger: MOTION.listStagger });
+          // opacity (não autoAlpha): visibility:hidden tiraria as linhas da ordem do Tab até a entrada
+          tl.from(rows, { opacity: 0, y: 16, ...MOTION.reveal, stagger: MOTION.listStagger });
           board.querySelectorAll<HTMLElement>("[data-board-pos]").forEach((pos, i) => {
             tl.to(
               pos,
@@ -148,7 +150,7 @@ export function Classification() {
                 <td className="py-6 pr-2 text-right">
                   <ArrowRight
                     aria-hidden="true"
-                    className="ml-auto size-5 text-silver-500 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-teal-400"
+                    className="pointer-events-none ml-auto size-5 text-silver-500 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-teal-400"
                     strokeWidth={1.75}
                   />
                 </td>
@@ -195,7 +197,19 @@ export function Classification() {
           aria-hidden="true"
           className="pointer-events-none invisible fixed top-0 left-0 z-40 hidden w-72 opacity-0 md:block"
         >
-          {hovered && <ImagePlaceholder label={hovered.name} />}
+          {hovered &&
+            (hovered.images.cover ? (
+              <ResponsiveImage
+                src={hovered.images.cover}
+                alt=""
+                width={hovered.images.coverSize?.[0] ?? 1440}
+                height={hovered.images.coverSize?.[1] ?? 704}
+                sizes="288px"
+                priority
+              />
+            ) : (
+              <ImagePlaceholder label={hovered.name} />
+            ))}
         </div>
       )}
     </section>

@@ -72,6 +72,22 @@ export function TrackMap() {
           );
 
         placeSectors();
+
+        // some durante o hero: lá o "12" em contorno já ocupa a direita da tela
+        const wrapper = ref.current;
+        gsap.set(wrapper, { autoAlpha: 0 });
+        // elemento, não seletor: dentro do useGSAP o seletor ficaria preso ao escopo do TrackMap
+        const hero = document.getElementById("grid");
+        if (hero) {
+          ScrollTrigger.create({
+            trigger: hero,
+            start: "bottom 75%",
+            onEnter: () => gsap.to(wrapper, { autoAlpha: 1, duration: 0.4, ease: "power2.out", overwrite: true }),
+            onLeaveBack: () => gsap.to(wrapper, { autoAlpha: 0, duration: 0.3, ease: "power2.in", overwrite: true }),
+          });
+        } else {
+          gsap.set(wrapper, { autoAlpha: 1 });
+        }
       });
     },
     { scope: ref, dependencies: [allowed], revertOnUpdate: true },

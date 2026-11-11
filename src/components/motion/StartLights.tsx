@@ -13,6 +13,9 @@ const COLUMNS = 5;
 const STEP = 0.35;
 
 const main = () => document.getElementById("conteudo");
+/** header, skip link, rodapé e dock: fora do overlay, ficam inert junto com o main */
+const outside = () =>
+  Array.from(document.querySelectorAll<HTMLElement>("[data-site-header], footer, a[href='#conteudo']"));
 
 type Props = {
   /** Chamado quando o hero pode começar a entrada: na arrancada, no pulo ou logo de cara se a intro não roda. */
@@ -50,6 +53,7 @@ export function StartLights({ onComplete }: Props) {
       markIntroSeen();
       stopScroll();
       main()?.setAttribute("inert", "");
+      outside().forEach((el) => el.setAttribute("inert", ""));
       ref.current?.querySelector<HTMLButtonElement>("[data-skip]")?.focus({ preventScroll: true });
 
       let heroStarted = false;
@@ -63,6 +67,7 @@ export function StartLights({ onComplete }: Props) {
         startHero();
         const m = main();
         m?.removeAttribute("inert");
+        outside().forEach((el) => el.removeAttribute("inert"));
         startScroll();
         if (m) {
           if (!m.hasAttribute("tabindex")) m.setAttribute("tabindex", "-1");
@@ -94,6 +99,7 @@ export function StartLights({ onComplete }: Props) {
       // desmontou no meio (StrictMode, HMR): nunca deixar a página travada
       return () => {
         main()?.removeAttribute("inert");
+        outside().forEach((el) => el.removeAttribute("inert"));
         startScroll();
       };
     },

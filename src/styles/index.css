@@ -173,6 +173,28 @@ html[data-motion="off"] *::after {
   }
 }
 
+/*
+ * Calha do TrackMap (≥1280px, só com movimento): o mapa fica fixo a 24px da borda e tem 120px.
+ * O conteúdo das seções ganha padding à direita só o necessário para não passar por baixo dele
+ * (156px em 1280, 76px em 1440, some a partir de ~1600). Header e rodapé não precisam.
+ */
+@media (width >= 80rem) and (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="off"]) main .container-site {
+    padding-right: max(32px, calc(176px - (100vw - 1240px) / 2));
+  }
+}
+
+/* Seta do "Role para largar": desliza 4px e volta, sem quique (pára com movimento reduzido/pausado) */
+@keyframes cue-nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
 /* Título metálico: só em títulos display e no "12" (SPEC §4) */
 @utility text-silver {
   background-image: linear-gradient(180deg, #f4f5f6 0%, #c5c9ce 45%, #7d838a 100%);

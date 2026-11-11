@@ -208,3 +208,17 @@ Para o Davi rodar (o QA não pode): `grep -rni "<nome real da administradora>" s
 - **Timing da intro:** medido por `MutationObserver` no headless. Em CPU lenta o véu de carregamento do chunk (~0,4 s aqui) pode crescer.
 - **A9 (header cobrindo o foco)** é risco apontado pela leitura do código, sem reprodução em teste.
 - `/critique` rodou em contexto único (sem os dois sub-agentes que a skill pede) e o overlay visual do detector não foi injetado. O detector rodou por CLI sobre `src` e `index.html`.
+
+---
+
+## Correções aplicadas após o QA (11/11/2026)
+
+Só itens reprovados e correções de acessibilidade sem mudança de design. Verificado no build (`npm run preview`), bundle inicial 184,63 KB gz.
+
+- [x] **Reprovado 1 · Teclado na Classificação:** `Classification.tsx` usa `opacity` em vez de `autoAlpha` na entrada das linhas. Tab a partir do topo agora passa por Mariana, Doctor Genesis, RGóis Odontologia e BabelCall em 1280 (tabela) e 390 (cards).
+- [x] **Reprovado 2 · Contraste do "12" do `ImagePlaceholder`:** `text-silver-500/60` → `text-silver-500` (token AA).
+- [x] **Seta da tabela sem clique:** ícone com `pointer-events-none`; o clique cai no link que cobre a linha.
+- [x] **Tab durante a intro:** header, skip link e rodapé também ficam `inert` durante a intro; o foco fica no overlay ("Pular largada").
+- [x] **Nome acessível do logo:** sem `aria-label`; o nome vem do texto visível "DC #12" + "Davi Curty" em `sr-only` (label-in-name).
+
+Pendentes de decisão do Davi (não aplicados): breakpoint do TrackMap, `ui.navLabel` e `telemetrySection` em `site.ts`, preload da fonte do h1 (vai junto com o SEO, no `index.html`), registro dos plugins GSAP dividido (exceção à SPEC §7.6).

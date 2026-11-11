@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { ImagePlaceholder } from "@/components/common/ImagePlaceholder";
+import { ResponsiveImage } from "@/components/common/ResponsiveImage";
 import { Reveal } from "@/components/motion/Reveal";
 import { about, isTodo, profile } from "@/content/site";
 import { gsap, MQ, useGSAP } from "@/lib/gsap";
@@ -39,10 +40,21 @@ export function DriverCard() {
 
   return (
     <section ref={ref} id="piloto" aria-labelledby="piloto-title" className="bg-carbon-900 py-24 md:py-32">
-      <div className="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-        <div data-driver-photo="" className="mx-auto w-full max-w-md lg:max-w-none">
-          {/* foto ainda não existe (SPEC §9) */}
-          <ImagePlaceholder ratio="4/5" label={profile.name} />
+      <div className="container-site grid items-center gap-10 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-12 lg:grid-cols-2 lg:gap-16">
+        <div data-driver-photo="" className="mx-auto w-full max-w-sm md:max-w-none">
+          {profile.photo ? (
+            <ResponsiveImage
+              src={profile.photo}
+              alt={profile.photoAlt}
+              width={1199}
+              height={1499}
+              ratio="4/5"
+              sizes="(min-width: 1024px) 560px, (min-width: 768px) 40vw, 384px"
+              position="center"
+            />
+          ) : (
+            <ImagePlaceholder ratio="4/5" label={profile.name} />
+          )}
         </div>
 
         <Reveal className="space-y-8">
@@ -70,9 +82,9 @@ export function DriverCard() {
           </div>
 
           {facts.length > 0 && (
-            <dl className="grid grid-cols-1 border-t border-line font-mono text-sm sm:grid-cols-2">
+            <dl className="grid grid-cols-1 border-t border-line font-mono text-sm">
               {facts.map((f) => (
-                <div key={f.label} className="flex justify-between gap-4 border-b border-line py-3 sm:pr-6">
+                <div key={f.label} className="flex justify-between gap-4 border-b border-line py-3 ">
                   <dt className="text-xs tracking-[0.15em] text-silver-500 uppercase">{f.label}</dt>
                   <dd className="text-right text-white tabular-nums">{f.value}</dd>
                 </div>

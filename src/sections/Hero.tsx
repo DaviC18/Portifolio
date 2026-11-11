@@ -142,17 +142,18 @@ export function Hero({ ready }: Props) {
           ))}
         </ul>
 
-        <div className="mt-10 flex flex-wrap items-center gap-4">
+        {/* celular: botões empilhados em largura total; ≥640px lado a lado */}
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
           {/* sem link (WhatsApp pendente) o wrapper some, senão o gap do flex desloca o resto */}
           <div data-hero="cta" className="[&:not(:has(a))]:hidden">
-            <MagneticButton>
-              <PitButton origem="hero" />
+            <MagneticButton className="w-full sm:w-auto">
+              <PitButton origem="hero" className="w-full" />
             </MagneticButton>
           </div>
           <a
             data-hero="cta"
             href="#classificacao"
-            className="inline-flex min-h-14 items-center gap-2 rounded-panel border border-line px-7 font-semibold text-white transition-colors duration-200 hover:border-silver-500 hover:bg-graphite-700"
+            className="inline-flex min-h-14 items-center justify-center gap-2 rounded-panel border border-line bg-carbon-950/70 px-7 font-semibold text-white transition-colors duration-200 hover:border-silver-500 hover:bg-graphite-700"
           >
             {ui.seeClassification}
           </a>
@@ -164,7 +165,7 @@ export function Hero({ ready }: Props) {
         className="absolute bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-1/2 flex -translate-x-1/2 items-center gap-2 font-mono text-xs tracking-[0.2em] text-silver-500 uppercase"
       >
         {hero.scrollCue}
-        <ArrowDown aria-hidden="true" className="size-4 animate-bounce" strokeWidth={1.75} />
+        <ArrowDown aria-hidden="true" className="size-4 animate-[cue-nudge_1.8s_var(--ease-in-out-quart)_infinite]" strokeWidth={1.75} />
       </p>
     </section>
   );

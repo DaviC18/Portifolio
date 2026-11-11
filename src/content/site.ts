@@ -32,7 +32,9 @@ export const profile = {
   availability: "Disponível para projetos", // TODO_DAVI: confirmar
   remote: true, // TODO_DAVI: confirmar
   yearsExperience: null as number | null, // TODO_DAVI
-  photo: null as string | null, // futuro: "/images/davi.webp"
+  /** WebP 4:5; variantes `-640` e `-960` ao lado (srcset). */
+  photo: "/images/davi.webp" as string | null,
+  photoAlt: "Davi Curty em foto preto e branco, sentado em frente ao computador.",
 } as const;
 
 /* ───────────────────────────── Navegação ───────────────────────────── */
@@ -90,7 +92,17 @@ export type Project = {
   stack: string[];
   telemetry: Telemetry[];
   links: { repo: string | null; live: string | Todo | null };
-  images: { cover: string | null; gallery: string[] };
+  /**
+   * Capa WebP (1440px) com variantes `-640` e `-960` ao lado (srcset).
+   * `null` mostra o ImagePlaceholder. Só capturas reais de tela (SPEC §9).
+   */
+  images: {
+    cover: string | null;
+    coverAlt?: string;
+    /** largura × altura do arquivo `cover` (padrão 1440 × 704) */
+    coverSize?: [number, number];
+    gallery: string[];
+  };
   disclaimer?: string;
 };
 
@@ -146,7 +158,13 @@ export const projects: Project[] = [
       repo: "https://github.com/DaviC18/Mariana-Core",
       live: TODO, // TODO_DAVI: URL ao vivo
     },
-    images: { cover: null, gallery: [] },
+    // arte de divulgação enviada pelo Davi; exceção à SPEC §9 aprovada por ele (11/11/2026)
+    images: {
+      cover: "/images/projects/mariana-cover.webp",
+      coverAlt: "Arte de apresentação da Mariana: conversa no WhatsApp e as etapas do atendimento até o agendamento.",
+      coverSize: [480, 320],
+      gallery: [],
+    },
   },
   {
     slug: "doctor-genesis",
@@ -189,7 +207,11 @@ export const projects: Project[] = [
       repo: "https://github.com/DaviC18/Dg-project",
       live: TODO, // TODO_DAVI: URL ao vivo
     },
-    images: { cover: null, gallery: [] },
+    images: {
+      cover: "/images/projects/doctor-genesis-cover.webp",
+      coverAlt: "Página inicial do Doctor Genesis, com o título e o resumo da pré-triagem.",
+      gallery: [],
+    },
     disclaimer:
       "O Doctor Genesis não substitui médicos, diagnóstico, atendimento de emergência nem avaliação clínica profissional. É uma ferramenta de apoio para organizar informações na pré-triagem.",
   },
@@ -220,7 +242,11 @@ export const projects: Project[] = [
       repo: "https://github.com/DaviC18/rgoisodontologia",
       live: null, // decidido: só GitHub
     },
-    images: { cover: null, gallery: [] },
+    images: {
+      cover: "/images/projects/rgois-odontologia-cover.webp",
+      coverAlt: "Página inicial do site da RGóis Odontologia, com o botão de agendar pelo WhatsApp.",
+      gallery: [],
+    },
   },
   {
     slug: "babelcall",
@@ -246,7 +272,14 @@ export const projects: Project[] = [
       repo: "https://github.com/DaviC18/BabelCall",
       live: TODO, // TODO_DAVI: URL ao vivo
     },
-    images: { cover: null, gallery: [] },
+    // mockup conceitual enviado pelo Davi; exceção à SPEC §6 e §9 aprovada por ele (11/11/2026).
+    // O alt deixa claro que é conceito, já que a tradução ainda está em desenvolvimento.
+    images: {
+      cover: "/images/projects/babelcall-cover.webp",
+      coverAlt: "Mockup conceitual do BabelCall: chamada em grupo com legendas traduzidas entre idiomas.",
+      coverSize: [1440, 960],
+      gallery: [],
+    },
   },
 ];
 
@@ -315,11 +348,11 @@ export const contactSection = {
 
 export const contact = {
   /** Só dígitos, com DDI e DDD. Ex.: "5524999999999". */
-  whatsapp: TODO as string, // TODO_DAVI
+  whatsapp: "5524981633200" as string,
   whatsappMessage: "Olá, Davi! Vi seu portfólio e quero conversar sobre um projeto.",
-  email: TODO as string, // TODO_DAVI
+  email: "davicurty959@gmail.com" as string,
   github: "https://github.com/DaviC18",
-  linkedin: TODO as string, // TODO_DAVI
+  linkedin: "https://www.linkedin.com/in/david-curty-84b2a0285/" as string,
   cvUrl: null as string | null, // opcional: "/cv.pdf"
 } as const;
 

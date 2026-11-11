@@ -8,7 +8,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { contact, contactSection, isTodo, ui } from "@/content/site";
 
 const GHOST =
-  "inline-flex min-h-14 items-center gap-2.5 rounded-panel border border-line px-7 font-semibold text-white transition-colors duration-200 hover:border-silver-500 hover:bg-graphite-700";
+  "inline-flex min-h-14 items-center justify-center gap-2.5 rounded-panel border border-line px-7 font-semibold text-white transition-colors duration-200 hover:border-silver-500 hover:bg-graphite-700";
 
 /**
  * Chamar o box `#box` (SPEC §5): WhatsApp (primário), copiar e-mail, GitHub, LinkedIn
@@ -31,10 +31,13 @@ export function Contact() {
           subtitle={contactSection.subtitle}
         />
 
-        <Reveal stagger={0.06} className="mt-12 flex flex-wrap items-center gap-4">
+        <Reveal
+          stagger={0.06}
+          className="mt-12 grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:items-center sm:gap-4"
+        >
           <div className="[&:not(:has(a))]:hidden">
-            <MagneticButton>
-              <PitButton origem="box" />
+            <MagneticButton className="w-full sm:w-auto">
+              <PitButton origem="box" className="w-full" />
             </MagneticButton>
           </div>
           <CopyEmailButton origem="box" />
